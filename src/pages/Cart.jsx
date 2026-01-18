@@ -167,7 +167,9 @@ const Cart = () => {
             </p>
           )}
 
-          <button className="checkout-btn">Proceed to Checkout</button>
+          <Link to="/checkout">
+            <button className="checkout-btn">Proceed to Checkout</button>
+          </Link>
           <button className="clear-btn" onClick={handleClear}>
             Clear Cart
           </button>

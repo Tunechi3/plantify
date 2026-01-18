@@ -12,6 +12,8 @@ import Cart from './pages/Cart'
 import Searchresults from './pages/Searchresults'
 import Wishlistpage from './pages/Wishlistpage'
 import AddProduct from './pages/Addproduct'
+import Profilepage from './pages/Profilepage'
+import CheckoutPage from './pages/Checkoutpage'
 
 
 
@@ -40,6 +42,8 @@ function App() {
         <Route path="/search" element={<Searchresults />} />
         <Route path="/wishlist" element={<Wishlistpage/>}/>
         <Route path="/addProduct" element={<AddProduct/>}/>
+        <Route path="/profile" element={<Profilepage/>}/>
+        <Route path="/checkout" element={<CheckoutPage/>}/>
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
       <ToastContainer

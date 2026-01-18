@@ -16,12 +16,15 @@ export const fetchUserCart = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      return res.data.map(item => ({
-        _id: item.product._id,
-        name: item.product.name,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
+      // Handle new response format {status, message, data}
+      const cartData = res.data.data || res.data;
+      
+      return cartData.map(item => ({
+        _id: item.product?._id || item._id,
+        name: item.product?.name || item.name,
+        price: item.product?.price || item.price,
+        image: item.product?.image || item.image,
+        category: item.product?.category || item.category,
         quantity: item.quantity,
       }));
     } catch (err) {
@@ -41,12 +44,14 @@ export const addToBackendCart = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      return res.data.map(item => ({
-        _id: item.product._id,
-        name: item.product.name,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
+      const cartData = res.data.data || res.data;
+      
+      return cartData.map(item => ({
+        _id: item.product?._id || item._id,
+        name: item.product?.name || item.name,
+        price: item.product?.price || item.price,
+        image: item.product?.image || item.image,
+        category: item.product?.category || item.category,
         quantity: item.quantity,
       }));
     } catch (err) {
@@ -66,12 +71,14 @@ export const updateBackendQty = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      return res.data.map(item => ({
-        _id: item.product._id,
-        name: item.product.name,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
+      const cartData = res.data.data || res.data;
+      
+      return cartData.map(item => ({
+        _id: item.product?._id || item._id,
+        name: item.product?.name || item.name,
+        price: item.product?.price || item.price,
+        image: item.product?.image || item.image,
+        category: item.product?.category || item.category,
         quantity: item.quantity,
       }));
     } catch (err) {
@@ -89,12 +96,14 @@ export const removeFromBackendCart = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      return res.data.map(item => ({
-        _id: item.product._id,
-        name: item.product.name,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
+      const cartData = res.data.data || res.data;
+      
+      return cartData.map(item => ({
+        _id: item.product?._id || item._id,
+        name: item.product?.name || item.name,
+        price: item.product?.price || item.price,
+        image: item.product?.image || item.image,
+        category: item.product?.category || item.category,
         quantity: item.quantity,
       }));
     } catch (err) {
@@ -136,12 +145,14 @@ export const syncGuestCart = createAsyncThunk(
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      return res.data.map(item => ({
-        _id: item.product._id,
-        name: item.product.name,
-        price: item.product.price,
-        image: item.product.image,
-        category: item.product.category,
+      const cartData = res.data.data || res.data;
+      
+      return cartData.map(item => ({
+        _id: item.product?._id || item._id,
+        name: item.product?.name || item.name,
+        price: item.product?.price || item.price,
+        image: item.product?.image || item.image,
+        category: item.product?.category || item.category,
         quantity: item.quantity,
       }));
     } catch (err) {
@@ -150,6 +161,8 @@ export const syncGuestCart = createAsyncThunk(
   }
 );
 
+// Rest of the file stays the same...
+// (Keep all the other actions and slice definition as is)
 // ========================================
 // AMAZON-STYLE UNIFIED CART ACTIONS
 // ========================================

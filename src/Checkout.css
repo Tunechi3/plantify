@@ -1,0 +1,638 @@
+/* E-Commerce Checkout Page Styles - Prefix: eco- */
+
+.eco-checkout-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.eco-checkout-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.eco-loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #02554a;
+}
+
+/* Progress Steps */
+.eco-progress-container {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.eco-progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.eco-progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.eco-step-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e9ecef;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.eco-progress-step.eco-active .eco-step-number {
+  background: #02554a;
+  color: white;
+}
+
+.eco-progress-step.eco-completed .eco-step-number {
+  background: #02554a;
+  color: white;
+}
+
+.eco-progress-step.eco-completed .eco-step-number::after {
+  content: '✓';
+}
+
+.eco-step-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.eco-progress-step.eco-active .eco-step-label {
+  color: #02554a;
+  font-weight: 600;
+}
+
+.eco-progress-line {
+  flex: 1;
+  height: 2px;
+  background: #e9ecef;
+  margin: 0 10px;
+}
+
+/* Messages */
+.eco-message {
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.eco-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.eco-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Main Layout */
+.eco-checkout-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+}
+
+.eco-main-section {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Step Content */
+.eco-step-content {
+  animation: ecoFadeIn 0.4s ease;
+}
+
+@keyframes ecoFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.eco-section-title {
+  margin: 0 0 30px 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: #02554a;
+}
+
+.eco-subsection-title {
+  margin: 30px 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #02554a;
+}
+
+/* Forms */
+.eco-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.eco-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.eco-form-group-full {
+  grid-column: 1 / -1;
+}
+
+.eco-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.eco-input {
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2d3748;
+  transition: all 0.2s ease;
+  background: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.eco-input:focus {
+  outline: none;
+  border-color: #02554a;
+  box-shadow: 0 0 0 3px rgba(2, 85, 74, 0.1);
+}
+
+.eco-saved-address-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.eco-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #02554a;
+}
+
+.eco-checkbox-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Shipping Methods */
+.eco-shipping-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.eco-shipping-method {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 15px;
+}
+
+.eco-shipping-method:hover {
+  border-color: #02554a;
+  background: #f8f9fa;
+}
+
+.eco-shipping-method.eco-selected {
+  border-color: #02554a;
+  background: rgba(2, 85, 74, 0.05);
+}
+
+.eco-radio {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #02554a;
+}
+
+.eco-shipping-details {
+  flex: 1;
+}
+
+.eco-shipping-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+.eco-shipping-time {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.eco-shipping-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #02554a;
+}
+
+/* Payment Methods */
+.eco-payment-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.eco-payment-method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 10px;
+}
+
+.eco-payment-method:hover {
+  border-color: #02554a;
+  background: #f8f9fa;
+}
+
+.eco-payment-method.eco-selected {
+  border-color: #02554a;
+  background: rgba(2, 85, 74, 0.05);
+}
+
+.eco-payment-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+}
+
+.eco-payment-info-box {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border-left: 4px solid #02554a;
+}
+
+.eco-payment-info-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* Review Section */
+.eco-review-section {
+  margin-bottom: 30px;
+}
+
+.eco-review-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #02554a;
+  margin-bottom: 15px;
+}
+
+.eco-review-card {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.eco-review-text {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #495057;
+  line-height: 1.6;
+}
+
+.eco-review-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Step Actions */
+.eco-step-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.eco-btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.eco-btn-primary {
+  background: #02554a;
+  color: white;
+  box-shadow: 0 4px 12px rgba(2, 85, 74, 0.3);
+}
+
+.eco-btn-primary:hover:not(:disabled) {
+  background: #024a41;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(2, 85, 74, 0.4);
+}
+
+.eco-btn-secondary {
+  background: transparent;
+  color: #02554a;
+  border: 2px solid #02554a;
+}
+
+.eco-btn-secondary:hover {
+  background: #02554a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.eco-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success Content */
+.eco-success-content {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.eco-success-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 30px;
+  background: #02554a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.eco-success-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #02554a;
+  margin: 0 0 20px 0;
+}
+
+.eco-success-text {
+  font-size: 16px;
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0 0 15px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eco-success-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.eco-success-actions a {
+  text-decoration: none;
+}
+
+/* Order Summary Sidebar */
+.eco-sidebar {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+.eco-order-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.eco-summary-title {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #02554a;
+}
+
+.eco-cart-items {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.eco-cart-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.eco-cart-item:last-child {
+  border-bottom: none;
+}
+
+.eco-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.eco-item-details {
+  flex: 1;
+}
+
+.eco-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.eco-item-quantity {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.eco-item-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #02554a;
+}
+
+.eco-summary-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 20px 0;
+}
+
+.eco-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #495057;
+}
+
+.eco-summary-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: #02554a;
+  margin-top: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .eco-checkout-content {
+    grid-template-columns: 1fr;
+  }
+
+  .eco-sidebar {
+    position: static;
+    order: -1;
+  }
+
+  .eco-payment-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .eco-progress-steps {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .eco-checkout-container {
+    padding: 20px 10px;
+  }
+
+  .eco-progress-container {
+    padding: 20px;
+  }
+
+  .eco-main-section {
+    padding: 24px 20px;
+  }
+
+  .eco-order-summary {
+    padding: 20px;
+  }
+
+  .eco-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .eco-step-actions {
+    flex-direction: column;
+  }
+
+  .eco-success-actions {
+    flex-direction: column;
+  }
+
+  .eco-section-title {
+    font-size: 22px;
+  }
+
+  .eco-step-number {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .eco-step-label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .eco-progress-container {
+    padding: 15px;
+  }
+
+  .eco-main-section {
+    padding: 20px 16px;
+  }
+
+  .eco-section-title {
+    font-size: 20px;
+  }
+
+  .eco-success-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+  }
+
+  .eco-success-title {
+    font-size: 24px;
+  }
+}
