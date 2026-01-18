@@ -8,9 +8,7 @@
 }
 .navbar {
   background-color: #02554a;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  /* padding: 0 1rem; */
-  padding: 8px;
+  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -18,20 +16,44 @@
 
 .navbar-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0.5rem 0;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
-.navbar-search {
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.company-name {
+  font-size: 1.9rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+}
+
+/* Search bar wrapper */
+.navbar-search-wrapper {
   flex: 1;
-  max-width: 420px;
+  min-width: 250px;
+  max-width: 500px;
+  position: relative;
+}
+
+.navbar-search {
   display: flex;
   align-items: center;
   background: #f5f5f5;
   border-radius: 30px;
-  padding: 4px 10px;
+  padding: 5px 10px;
+  width: 100%;
 }
 
 .navbar-search input {
@@ -51,14 +73,114 @@
   color: #444;
 }
 
-/* .navbar-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
+/* Suggestions dropdown */
+.suggestions-dropdown {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 10;
+  border-radius: 8px;
 }
 
-.logo {
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background: #f0f0f0;
+}
+
+/* Navbar menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  color: white;
+  font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
+/* Cart badge */
+.cart-icon-wrapper {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* Wishlist button */
+.navbar-link .fa-heart {
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .navbar-menu {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .navbar-search-wrapper {
+    width: 100%;
+  }
+}
+
+/* .logo {
   height: 40px;
   width: auto;
 } */
@@ -66,11 +188,15 @@
 .company-name {
   font-size: 1.9rem;
   font-family: "Poppins", sans-serif;
+  text-decoration: none;
   font-weight: 400;
   font-style: normal;
+  list-style: none;
   color: white;
 }
-
+.navbar-logo a {
+  text-decoration: none; /* remove underline */
+}
 .navbar-menu {
   display: flex;
   list-style: none;
@@ -932,4 +1058,83 @@
   .navbar-menu {
     gap: 1rem;
   }
+}
+
+.navbar-search-wrapper {
+  position: relative;
+  width: 500px; /* adjust as needed */
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background: #f0f0f0;
+}
+
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #f5f5f5 37%,
+    #e0e0e0 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+.skeleton-title {
+  width: 180px;
+  height: 22px;
+}
+
+.skeleton-btn {
+  width: 100px;
+  height: 36px;
+}
+
+.skeleton-btn.full {
+  width: 100%;
+}
+
+.skeleton-img {
+  height: 200px;
+  width: 100%;
+}
+
+.skeleton-text {
+  height: 16px;
+  margin: 10px 0;
+}
+
+.skeleton-text.small {
+  width: 60%;
+}
+
+.skeleton-card {
+  overflow: hidden;
 }

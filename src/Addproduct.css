@@ -168,78 +168,6 @@ textarea.input-field {
 }
 
 
-/* .cart-container {
-  padding: 40px 20px;
-}
-
-.cart-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.cart-items {
-  flex: 2;
-}
-
-.cart-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.cart-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.cart-info h4 {
-  margin: 0 0 5px;
-}
-
-.cart-qty {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.qty-btn {
-  padding: 5px 10px;
-  background: #eee;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.remove-btn {
-  background: #ff4d4d;
-  border: none;
-  padding: 10px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.cart-summary {
-  flex: 1;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  height: fit-content;
-}
-
-.checkout-btn {
-  width: 100%;
-  margin-top: 20px;
-} */
-
 .cart-page {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -364,15 +292,15 @@ textarea.input-field {
 }
 
 .summary-total {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .checkout-btn {
   width: 100%;
-  background: #2e7d32;
+  background: #2d6d64;
   color: white;
   padding: 14px;
   border-radius: 10px;
@@ -382,6 +310,10 @@ textarea.input-field {
   cursor: pointer;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
+}
+
+.checkout-btn:hover{
+  background: #0f5148;
 }
 
 .clear-btn {

@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { addToCart } from "../app/cartSlice";
-import { useDispatch } from "react-redux";
+import { addToWishlist, removeFromWishlist } from "../app/wishlistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Categoriessection = ({ categories = [], products = [] }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState({});
+
+  const searchParams = new URLSearchParams(location.search);
+  const categoryIdInURL = searchParams.get("category");
+
+  const wishlistItems = useSelector((state) => state.wishlist.items);
+
+  useEffect(() => {
+    if (products.length > 0 || categories.length > 0) {
+      setLoading(false);
+    }
+  }, [products, categories]);
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
@@ -18,10 +37,79 @@ const Categoriessection = ({ categories = [], products = [] }) => {
   const getProductsByCategory = (categoryId) =>
     products.filter((p) => p.category && p.category._id === categoryId);
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product)); // Dispatch the product to Redux store
+  // Amazon-style: Unified add to cart
+  const handleAddToCart = async (product) => {
+    setAddingToCart(prev => ({ ...prev, [product._id]: true }));
+
+    try {
+      await dispatch(addToCart(product)).unwrap();
+      toast.success(`${product.name} added to cart!`, {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+    } catch (error) {
+      toast.error("Failed to add to cart");
+    } finally {
+      setAddingToCart(prev => ({ ...prev, [product._id]: false }));
+    }
   };
 
+  const handleWishlist = (product) => {
+    const exists = wishlistItems.find((item) => item._id === product._id);
+    if (exists) {
+      dispatch(removeFromWishlist(product._id));
+      toast.info("Removed from wishlist");
+    } else {
+      dispatch(addToWishlist(product));
+      toast.success("Added to wishlist");
+    }
+  };
+
+  const handleViewAll = (categoryId) => {
+    if (categoryIdInURL === categoryId) {
+      navigate("/");
+    } else {
+      navigate(`/search?category=${categoryId}`);
+    }
+  };
+
+  /* ================= LOADING UI ================= */
+  if (loading) {
+    return (
+      <section className="categories-section">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Shop by Category</h2>
+            <p className="section-subtitle">Loading products...</p>
+          </div>
+
+          {[...Array(2)].map((_, idx) => (
+            <div key={idx} className="category-section">
+              <div className="category-header">
+                <div className="skeleton skeleton-title"></div>
+                <div className="skeleton skeleton-btn"></div>
+              </div>
+
+              <div className="products-grid">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="product-card skeleton-card">
+                    <div className="skeleton skeleton-img"></div>
+                    <div className="product-info">
+                      <div className="skeleton skeleton-text"></div>
+                      <div className="skeleton skeleton-text small"></div>
+                      <div className="skeleton skeleton-btn full"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  /* ================= NORMAL UI ================= */
   return (
     <section className="categories-section">
       <div className="container">
@@ -36,16 +124,29 @@ const Categoriessection = ({ categories = [], products = [] }) => {
           const catProducts = getProductsByCategory(category._id);
           if (catProducts.length === 0) return null;
 
+          const displayedProducts = catProducts.slice(0, 4);
+
           return (
             <div key={category._id} className="category-section">
               <div className="category-header">
                 <h3 className="category-title">{category.name}</h3>
-                <button className="view-all-btn">View All</button>
+                <button
+                  className="view-all-btn"
+                  onClick={() => handleViewAll(category._id)}
+                >
+                  {categoryIdInURL === category._id
+                    ? "Return Home"
+                    : "View All"}
+                </button>
               </div>
 
               <div className="products-grid">
-                {catProducts.map((product) => {
+                {displayedProducts.map((product) => {
                   const rating = Number(product.rating ?? 4);
+                  const inWishlist = wishlistItems.find(
+                    (item) => item._id === product._id
+                  );
+                  const isAdding = addingToCart[product._id];
 
                   return (
                     <div key={product._id} className="product-card">
@@ -54,7 +155,13 @@ const Categoriessection = ({ categories = [], products = [] }) => {
                           src={product.image || "https://via.placeholder.com/300"}
                           alt={product.name}
                         />
-                        <button className="wishlist-btn">
+                        <button
+                          className="wishlist-btn"
+                          onClick={() => handleWishlist(product)}
+                          style={{
+                            color: inWishlist ? "red" : "grey",
+                          }}
+                        >
                           <FaHeart />
                         </button>
                         <div className="product-badge">Hot</div>
@@ -73,9 +180,10 @@ const Categoriessection = ({ categories = [], products = [] }) => {
                         <button
                           className="add-to-cart-btn"
                           onClick={() => handleAddToCart(product)}
+                          disabled={isAdding}
                         >
                           <FaShoppingCart className="cart-icon" />
-                          Add to Cart
+                          {isAdding ? "Adding..." : "Add to Cart"}
                         </button>
                       </div>
                     </div>

@@ -82,8 +82,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Loginpage/>
-      <Addproduct/>
       <Categoriessection categories={categories} products={products} />
       <Footer/>
     </>

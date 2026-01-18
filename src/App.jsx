@@ -9,6 +9,9 @@ import { Link, Route, Router, Routes} from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from './pages/Cart'
+import Searchresults from './pages/Searchresults'
+import Wishlistpage from './pages/Wishlistpage'
+import AddProduct from './pages/Addproduct'
 
 
 
@@ -34,6 +37,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/search" element={<Searchresults />} />
+        <Route path="/wishlist" element={<Wishlistpage/>}/>
+        <Route path="/addProduct" element={<AddProduct/>}/>
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
       <ToastContainer
