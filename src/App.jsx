@@ -3,7 +3,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Footer from './components/Footer'
-import Categoriessection from './components/CategoriesSection'
+// import Categoriessection from './components/Categoriessection'
 import Loginpage from './pages/Loginpage'
 import { Link, Route, Router, Routes} from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
