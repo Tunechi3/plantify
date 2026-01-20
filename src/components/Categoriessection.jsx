@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Categoriessection = ({ categories = [], products = [] }) => {
+const CategoriesSection = ({ categories = [], products = [] }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -198,4 +198,4 @@ const Categoriessection = ({ categories = [], products = [] }) => {
   );
 };
 
-export default Categoriessection;
+export default CategoriesSection;
