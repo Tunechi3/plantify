@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Checkout.css';
 
-const CheckoutPage = () => {
+const Checkoutpage = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -620,4 +620,4 @@ const CheckoutPage = () => {
   );
 };
 
-export default CheckoutPage;
+export default Checkoutpage;
