@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Categoriessection from "../components/CategoriesSection";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Categories from "../components/Categories";
 
 const Searchresults = () => {
   const location = useLocation();
@@ -92,7 +92,7 @@ const Searchresults = () => {
         )}
       </div> */}
 
-      <Categoriessection
+      <Categories
         categories={categories}
         products={filteredProducts}
         isSearchPage={!!categoryId}
