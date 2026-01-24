@@ -7,10 +7,10 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { FaShippingFast, FaCreditCard, FaHeadset } from 'react-icons/fa';
 import Footer from '../components/Footer';
-import Loginpage from './Loginpage';
-import Addproduct from './Addproduct';
 import axios from 'axios';
-import CategoriesSection from '../components/CategoriesSection.jsx';
+import Categories from '../components/Categories';
+
+
 
 const Home = () => {
   const categoriess = [
@@ -82,7 +82,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <CategoriesSection categories={categories} products={products} />
+      <Categories categories={categories} products={products}/>
       <Footer/>
     </>
   );
