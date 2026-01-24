@@ -49,7 +49,7 @@ const Loginpage = () => {
                 const { token } = res.data;
                 localStorage.setItem("token", token);
 
-                // Update context
+                // Update context (this will set the auto-logout timer)
                 login();
 
                 // Amazon-style: Sync guest cart with backend if exists
@@ -60,17 +60,15 @@ const Loginpage = () => {
                     toast.success("Cart synced successfully!");
                   } catch (syncError) {
                     console.error("Cart sync failed:", syncError);
-                    // Still fetch user cart even if sync fails
                     await dispatch(fetchUserCart(token));
                   }
                 } else {
-                  // Just fetch user's existing cart
                   await dispatch(fetchUserCart(token));
                 }
 
-                toast.success("Login successful!", {
+                toast.success("Login successful! You'll stay logged in for 7 days.", {
                   onClose: () => navigate("/"),
-                  autoClose: 1500,
+                  autoClose: 2000,
                 });
               } catch (error) {
                 toast.error(error.response?.data?.message || "Login failed.");

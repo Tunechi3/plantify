@@ -16,7 +16,6 @@ export const fetchUserCart = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      // Handle new response format {status, message, data}
       const cartData = res.data.data || res.data;
       
       return cartData.map(item => ({
@@ -161,8 +160,6 @@ export const syncGuestCart = createAsyncThunk(
   }
 );
 
-// Rest of the file stays the same...
-// (Keep all the other actions and slice definition as is)
 // ========================================
 // AMAZON-STYLE UNIFIED CART ACTIONS
 // ========================================
@@ -336,17 +333,25 @@ const cartSlice = createSlice({
       // Amazon-style unified update quantity
       .addCase(updateQuantity.fulfilled, (state, action) => {
         if (action.payload.isGuest) {
-          // Guest cart
+          // Guest cart - update local storage
           const { productId, quantity } = action.payload;
           const item = state.items.find((i) => i._id === productId);
           if (item) {
             item.quantity = quantity;
             localStorage.setItem("cart", JSON.stringify(state.items));
           }
-        } else {
-          // Logged-in user
-          state.items = action.payload;
         }
+        // For logged-in users: DO NOTHING
+        // Optimistic update already handled the UI
+        // Backend call just confirms success - no state change needed
+        // This prevents flickering!
+      })
+
+      // Handle update quantity errors
+      .addCase(updateQuantity.rejected, (state, action) => {
+        // Error handling is done in Cart.jsx via rollbackCart
+        // Just track error state here if needed
+        state.error = action.payload;
       })
 
       // Amazon-style unified remove from cart
