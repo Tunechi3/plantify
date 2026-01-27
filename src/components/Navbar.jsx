@@ -7,6 +7,7 @@ import { UserContext } from "./UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
+import API_URL from "../config";
 
 const Navbar = () => {
   const { isLoggedIn, logout } = useContext(UserContext);
@@ -33,7 +34,7 @@ const Navbar = () => {
     if (!e.target.value.trim()) return setSuggestions([]);
 
     try {
-      const res = await axios.get("http://localhost:3000/api/products");
+      const res = await axios.get(`${API_URL}/api/products`);
       const filtered = res.data.filter(
         (p) =>
           p.name.toLowerCase().includes(e.target.value.toLowerCase()) ||

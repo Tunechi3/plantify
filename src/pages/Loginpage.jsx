@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import { syncGuestCart, fetchUserCart } from "../app/cartSlice";
+import API_URL from "../config";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -42,7 +43,7 @@ const Loginpage = () => {
             onSubmit={async (values, { setSubmitting }) => {
               try {
                 const res = await axios.post(
-                  "http://localhost:3000/api/users/login-user",
+                  `${API_URL}/api/users/login-user`,
                   values
                 );
 
@@ -136,7 +137,7 @@ const Loginpage = () => {
             onSubmit={async (values, { setSubmitting, resetForm }) => {
               try {
                 await axios.post(
-                  "http://localhost:3000/api/users/register-user",
+                  `${API_URL}/api/users/register-user`,
                   {
                     fullname: values.fullname,
                     email: values.email,

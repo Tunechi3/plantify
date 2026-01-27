@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../Checkout.css';
+import API_URL from '../config';
 
 const Checkoutpage = () => {
   const [step, setStep] = useState(1);
@@ -50,7 +51,7 @@ const Checkoutpage = () => {
     const token = localStorage.getItem('token');
     
     // Fetch user profile
-    const profileResponse = await fetch('http://localhost:3000/api/users/profile', {
+    const profileResponse = await fetch(`${API_URL}/api/users/profile`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const profileData = await profileResponse.json();
@@ -78,7 +79,7 @@ const Checkoutpage = () => {
     }
 
     // Fetch cart items
-    const cartResponse = await fetch('http://localhost:3000/api/cart', {
+    const cartResponse = await fetch(`${API_URL}/api/cart`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     const cartData = await cartResponse.json();
@@ -179,7 +180,7 @@ const Checkoutpage = () => {
         total: calculateTotal(),
       };
 
-      const response = await fetch('http://localhost:3000/api/orders', {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

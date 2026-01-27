@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Categories from "../components/Categories";
+import API_URL from "../config";
 
 const Searchresults = () => {
   const location = useLocation();
@@ -18,8 +19,8 @@ const Searchresults = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const catRes = await axios.get("http://localhost:3000/api/categories");
-        const prodRes = await axios.get("http://localhost:3000/api/products");
+        const catRes = await axios.get(`${API_URL}/api/categories`);
+        const prodRes = await axios.get(`${API_URL}/api/products`);
 
         setCategories(catRes.data);
         setProducts(

@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "../Addproduct.css";
 import { toast } from "react-toastify";
+import API_URL from "../config";
 
 
 export default function AddProduct() {
@@ -19,7 +20,7 @@ export default function AddProduct() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/categories");
+        const res = await axios.get(`${API_URL}/api/categories`);
         setCategories(
           res.data.map(cat => ({
             id: cat._id,
@@ -58,7 +59,7 @@ export default function AddProduct() {
     toast.info("Adding product...");
 
     try {
-      await axios.post("http://localhost:3000/api/products", {
+      await axios.post(`${API_URL}/api/products`, {
         name: values.name,
         price: values.price,
         description: values.description,

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const Categories = ({ categories = [], products = [] }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

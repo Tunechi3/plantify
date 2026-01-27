@@ -9,6 +9,7 @@ import { FaShippingFast, FaCreditCard, FaHeadset } from 'react-icons/fa';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import Categories from '../components/Categories';
+import API_URL from '../config';
 
 
 
@@ -27,8 +28,8 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const catRes = await axios.get("http://localhost:3000/api/categories");
-        const prodRes = await axios.get("http://localhost:3000/api/products");
+        const catRes = await axios.get(`${API_URL}/api/categories`);
+        const prodRes = await axios.get(`${API_URL}/api/products`);
 
         // Map products so they match category object
         const mappedProducts = prodRes.data.map(prod => ({

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../Profilepage.css';
+import API_URL from '../config';
 
 
 const Profilepage = () => {
@@ -51,7 +52,7 @@ const Profilepage = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/users/profile', {
+      const response = await fetch(`${API_URL}/api/users/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -113,7 +114,7 @@ const Profilepage = () => {
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/users/profile', {
+      const response = await fetch(`${API_URL}/api/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ const Profilepage = () => {
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/users/change-password', {
+      const response = await fetch(`${API_URL}/api/users/change-password`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
