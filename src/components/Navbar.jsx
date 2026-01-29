@@ -20,6 +20,8 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const wrapperRef = useRef(null);
   const searchInputRef = useRef(null);
+  const mobileSearchRef = useRef(null);
+  const mobileSearchToggleRef = useRef(null);
 
   const cartItems = useSelector((state) => state.cart.items);
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -51,29 +53,33 @@ const Navbar = () => {
     }
   };
 
-  // Close suggestions dropdown
+  // Close suggestions dropdown and mobile search when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if clicking the mobile search toggle button or inside mobile search overlay
-      const isMobileSearchToggle = event.target.closest('.mobile-search-toggle');
-      const isMobileSearchOverlay = event.target.closest('.mobile-search-overlay');
-      
-      // Don't close if clicking the mobile search toggle or inside the overlay
-      if (isMobileSearchToggle || isMobileSearchOverlay) {
+      // Check if click is on mobile search toggle button
+      if (mobileSearchToggleRef.current && mobileSearchToggleRef.current.contains(event.target)) {
         return;
       }
-      
+
+      // Check if click is inside mobile search overlay
+      if (mobileSearchRef.current && mobileSearchRef.current.contains(event.target)) {
+        return;
+      }
+
+      // Close desktop search suggestions if clicking outside
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setSuggestions([]);
-        // Close mobile search if clicking outside
-        if (window.innerWidth <= 576) {
-          setSearchOpen(false);
-        }
+      }
+
+      // Close mobile search if clicking outside on mobile screens
+      if (window.innerWidth <= 576 && searchOpen) {
+        setSearchOpen(false);
       }
     };
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [searchOpen]);
 
   // Close menu when clicking outside or on resize
   useEffect(() => {
@@ -126,8 +132,9 @@ const Navbar = () => {
   };
 
   const toggleSearch = (e) => {
-    e.stopPropagation(); // Prevent event bubbling
-    setSearchOpen(!searchOpen);
+    e.preventDefault();
+    e.stopPropagation();
+    setSearchOpen(prev => !prev);
     // Close menu when opening search
     if (!searchOpen) {
       setMenuOpen(false);
@@ -183,9 +190,11 @@ const Navbar = () => {
 
         {/* Mobile Search Icon - Shows only on ≤576px */}
         <button 
+          ref={mobileSearchToggleRef}
           className="mobile-search-toggle"
           onClick={toggleSearch}
           aria-label="Toggle search"
+          type="button"
         >
           <FontAwesomeIcon icon={searchOpen ? faTimes : faMagnifyingGlass} />
         </button>
@@ -193,6 +202,7 @@ const Navbar = () => {
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
           <div 
+            ref={mobileSearchRef}
             className="mobile-search-overlay" 
             onClick={(e) => {
               // Only close if clicking the overlay itself, not its children
@@ -207,6 +217,7 @@ const Navbar = () => {
                 className="mobile-search-close"
                 onClick={() => setSearchOpen(false)}
                 aria-label="Close search"
+                type="button"
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>
@@ -251,6 +262,7 @@ const Navbar = () => {
           className={`hamburger ${menuOpen ? 'active' : ''}`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
+          type="button"
         >
           <span></span>
           <span></span>
