@@ -18,6 +18,7 @@ const Navbar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchJustOpened, setSearchJustOpened] = useState(false);
   const wrapperRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -115,10 +116,17 @@ const Navbar = () => {
   const toggleSearch = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    
     // Only open the search, never close it from this button
     if (!searchOpen) {
       setSearchOpen(true);
       setMenuOpen(false);
+      setSearchJustOpened(true);
+      
+      // Reset flag after animation completes (350ms matches CSS animation)
+      setTimeout(() => {
+        setSearchJustOpened(false);
+      }, 350);
     }
   };
 
@@ -126,15 +134,19 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // Function to close mobile search - only called by X button
+  // Function to close mobile search - only called by X button or overlay click
   const closeMobileSearch = () => {
     setSearchOpen(false);
+    setSearchJustOpened(false);
   };
 
   // Handle overlay backdrop click - only close when clicking the backdrop itself
   const handleOverlayClick = (e) => {
+    // Prevent closing if search just opened (fixes Android issue)
+    if (searchJustOpened) return;
+    
     // Only close if clicking the overlay backdrop itself, not the search container
-    if (e.target === e.currentTarget) {
+    if (e.target.classList.contains('mobile-search-overlay')) {
       closeMobileSearch();
     }
   };
