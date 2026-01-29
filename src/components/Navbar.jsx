@@ -20,8 +20,6 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const wrapperRef = useRef(null);
   const searchInputRef = useRef(null);
-  const mobileSearchRef = useRef(null);
-  const mobileSearchToggleRef = useRef(null);
 
   const cartItems = useSelector((state) => state.cart.items);
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -53,33 +51,16 @@ const Navbar = () => {
     }
   };
 
-  // Close suggestions dropdown and mobile search when clicking outside
+  // Close suggestions dropdown for desktop search
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if click is on mobile search toggle button
-      if (mobileSearchToggleRef.current && mobileSearchToggleRef.current.contains(event.target)) {
-        return;
-      }
-
-      // Check if click is inside mobile search overlay
-      if (mobileSearchRef.current && mobileSearchRef.current.contains(event.target)) {
-        return;
-      }
-
-      // Close desktop search suggestions if clicking outside
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setSuggestions([]);
       }
-
-      // Close mobile search if clicking outside on mobile screens
-      if (window.innerWidth <= 576 && searchOpen) {
-        setSearchOpen(false);
-      }
     };
-    
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [searchOpen]);
+  }, []);
 
   // Close menu when clicking outside or on resize
   useEffect(() => {
@@ -134,15 +115,20 @@ const Navbar = () => {
   const toggleSearch = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setSearchOpen(prev => !prev);
-    // Close menu when opening search
+    // Only open the search, never close it from this button
     if (!searchOpen) {
+      setSearchOpen(true);
       setMenuOpen(false);
     }
   };
 
   const handleLinkClick = () => {
     setMenuOpen(false);
+  };
+
+  // Function to close mobile search - only called by X button
+  const closeMobileSearch = () => {
+    setSearchOpen(false);
   };
 
   return (
@@ -190,32 +176,22 @@ const Navbar = () => {
 
         {/* Mobile Search Icon - Shows only on ≤576px */}
         <button 
-          ref={mobileSearchToggleRef}
           className="mobile-search-toggle"
           onClick={toggleSearch}
           aria-label="Toggle search"
           type="button"
         >
-          <FontAwesomeIcon icon={searchOpen ? faTimes : faMagnifyingGlass} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div 
-            ref={mobileSearchRef}
-            className="mobile-search-overlay" 
-            onClick={(e) => {
-              // Only close if clicking the overlay itself, not its children
-              if (e.target.classList.contains('mobile-search-overlay')) {
-                setSearchOpen(false);
-              }
-            }}
-          >
+          <div className="mobile-search-overlay">
             <div className="mobile-search-container">
-              {/* Close button */}
+              {/* Close button - ONLY way to close mobile search */}
               <button 
                 className="mobile-search-close"
-                onClick={() => setSearchOpen(false)}
+                onClick={closeMobileSearch}
                 aria-label="Close search"
                 type="button"
               >
