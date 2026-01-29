@@ -116,7 +116,8 @@ const Navbar = () => {
     }
   };
 
-  const toggleSearch = () => {
+  const toggleSearch = (e) => {
+    e.stopPropagation(); // Prevent event bubbling
     setSearchOpen(!searchOpen);
     // Close menu when opening search
     if (!searchOpen) {
@@ -182,8 +183,16 @@ const Navbar = () => {
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div className="mobile-search-overlay" onClick={() => setSearchOpen(false)}>
-            <div className="mobile-search-container" onClick={(e) => e.stopPropagation()}>
+          <div 
+            className="mobile-search-overlay" 
+            onClick={(e) => {
+              // Only close if clicking the overlay itself, not its children
+              if (e.target.classList.contains('mobile-search-overlay')) {
+                setSearchOpen(false);
+              }
+            }}
+          >
+            <div className="mobile-search-container">
               {/* Close button */}
               <button 
                 className="mobile-search-close"
