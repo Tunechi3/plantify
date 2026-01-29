@@ -486,9 +486,9 @@
     display: block;
   }
 
-  /* Mobile search overlay styles - FIXED: Only display when component is rendered */
+  /* Mobile search overlay styles - FIXED */
   .mobile-search-overlay {
-    display: flex; /* Changed from block to flex for proper centering */
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -498,10 +498,13 @@
     z-index: 2000;
     backdrop-filter: blur(3px);
     animation: fadeIn 0.3s ease;
-    cursor: pointer;
+    cursor: default; /* Changed from pointer to default */
     align-items: flex-start;
     justify-content: center;
     padding-top: 20vh;
+    /* Prevent touch event issues on Android */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
   }
 
   @keyframes fadeIn {
@@ -523,6 +526,8 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     animation: slideDown 0.3s ease;
     cursor: default;
+    /* Prevent touch event issues on Android */
+    touch-action: auto;
   }
 
   @keyframes slideDown {
@@ -554,6 +559,8 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     z-index: 10;
+    /* Ensure proper touch handling */
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mobile-search-close:hover {

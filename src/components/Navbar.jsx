@@ -131,6 +131,14 @@ const Navbar = () => {
     setSearchOpen(false);
   };
 
+  // Handle overlay backdrop click - only close when clicking the backdrop itself
+  const handleOverlayClick = (e) => {
+    // Only close if clicking the overlay backdrop itself, not the search container
+    if (e.target === e.currentTarget) {
+      closeMobileSearch();
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -186,8 +194,11 @@ const Navbar = () => {
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div className="mobile-search-overlay">
-            <div className="mobile-search-container">
+          <div className="mobile-search-overlay" onClick={handleOverlayClick}>
+            <div 
+              className="mobile-search-container"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Close button - ONLY way to close mobile search */}
               <button 
                 className="mobile-search-close"
