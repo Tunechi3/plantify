@@ -95,10 +95,28 @@ const Navbar = () => {
   // Focus search input when mobile search opens
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
-      // Delay focus slightly to ensure DOM is ready
+      // Disable Swiper to prevent touch conflicts
+      const swiperContainers = document.querySelectorAll('.swiper, .swiper-container');
+      swiperContainers.forEach(swiper => {
+        swiper.style.pointerEvents = 'none';
+        swiper.style.touchAction = 'none';
+      });
+      
+      // Delay focus to allow overlay animation and prevent immediate blur
       setTimeout(() => {
-        searchInputRef.current.focus();
-      }, 100);
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+          // Force click to ensure keyboard appears on Android
+          searchInputRef.current.click();
+        }
+      }, 400);
+    } else {
+      // Re-enable Swiper when search closes
+      const swiperContainers = document.querySelectorAll('.swiper, .swiper-container');
+      swiperContainers.forEach(swiper => {
+        swiper.style.pointerEvents = 'auto';
+        swiper.style.touchAction = 'auto';
+      });
     }
   }, [searchOpen]);
 
@@ -117,8 +135,11 @@ const Navbar = () => {
   };
 
   const toggleSearch = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.nativeEvent?.stopImmediatePropagation();
+    }
     
     // Only open the search, never close it from this button
     if (!searchOpen) {
@@ -126,10 +147,10 @@ const Navbar = () => {
       setMenuOpen(false);
       setSearchJustOpened(true);
       
-      // Increased timeout for Android compatibility
+      // Extended timeout for Android + keyboard animation
       setTimeout(() => {
         setSearchJustOpened(false);
-      }, 500);
+      }, 800);
     }
   };
 
@@ -147,12 +168,13 @@ const Navbar = () => {
   const handleOverlayClick = (e) => {
     // Prevent closing if search just opened (fixes Android issue)
     if (searchJustOpened) {
+      e.preventDefault();
       e.stopPropagation();
       return;
     }
     
     // Only close if clicking the overlay backdrop itself, not the search container
-    if (e.target.classList.contains('mobile-search-overlay')) {
+    if (e.target === e.currentTarget && e.target.classList.contains('mobile-search-overlay')) {
       closeMobileSearch();
     }
   };

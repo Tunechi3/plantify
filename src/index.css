@@ -494,7 +494,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    isolation: isolate;
     background: rgba(0, 0, 0, 0.7);
     z-index: 2000;
     backdrop-filter: blur(3px);
@@ -504,7 +503,8 @@
     justify-content: center;
     padding-top: 20vh;
     -webkit-tap-highlight-color: transparent;
-    /* REMOVED touch-action: none - This was blocking input on Android */
+    /* Prevent any pointer events during initial animation */
+    pointer-events: auto;
   }
 
   @keyframes fadeIn {
@@ -584,10 +584,12 @@
     max-height: 300px;
   }
 
-  body:has(.mobile-search-overlay) .swiper {
-  pointer-events: none;
-  touch-action: none;
-}
+  /* Disable Swiper when search overlay is active */
+  body:has(.mobile-search-overlay) .swiper,
+  body:has(.mobile-search-overlay) .swiper-container {
+    pointer-events: none !important;
+    touch-action: none !important;
+  }
 
   /* Adjust hamburger menu width */
   .navbar-menu {
