@@ -54,6 +54,15 @@ const Navbar = () => {
   // Close suggestions dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Check if clicking the mobile search toggle button or inside mobile search overlay
+      const isMobileSearchToggle = event.target.closest('.mobile-search-toggle');
+      const isMobileSearchOverlay = event.target.closest('.mobile-search-overlay');
+      
+      // Don't close if clicking the mobile search toggle or inside the overlay
+      if (isMobileSearchToggle || isMobileSearchOverlay) {
+        return;
+      }
+      
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setSuggestions([]);
         // Close mobile search if clicking outside
