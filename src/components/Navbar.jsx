@@ -18,7 +18,7 @@ const Navbar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchJustOpened, setSearchJustOpened] = useState(false);
+  // const [searchJustOpened, setSearchJustOpened] = useState(false);
   const wrapperRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -103,13 +103,18 @@ const Navbar = () => {
       });
       
       // Delay focus to allow overlay animation and prevent immediate blur
+      // setTimeout(() => {
+      //   if (searchInputRef.current) {
+      //     searchInputRef.current.focus();
+          
+      //     searchInputRef.current.click();
+      //   }
+      // }, 400);
+
       setTimeout(() => {
-        if (searchInputRef.current) {
-          searchInputRef.current.focus();
-          // Force click to ensure keyboard appears on Android
-          searchInputRef.current.click();
-        }
-      }, 400);
+        searchInputRef.current?.focus({ preventScroll: true });
+      }, 300);
+    // Force click to ensure keyboard appears on Android
     } else {
       // Re-enable Swiper when search closes
       const swiperContainers = document.querySelectorAll('.swiper, .swiper-container');
@@ -145,12 +150,12 @@ const Navbar = () => {
     if (!searchOpen) {
       setSearchOpen(true);
       setMenuOpen(false);
-      setSearchJustOpened(true);
+      // setSearchJustOpened(true);
       
       // Much longer timeout - 1.5 seconds for Android keyboard animation
-      setTimeout(() => {
-        setSearchJustOpened(false);
-      }, 1500);
+      // setTimeout(() => {
+        // setSearchJustOpened(false);
+      // }, 1500);
     }
   };
 
@@ -226,14 +231,12 @@ const Navbar = () => {
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div 
-            className={`mobile-search-overlay ${searchJustOpened ? 'just-opened' : ''}`}
-            onClick={handleOverlayClick}
-          >
-            <div 
+          <div className="mobile-search-overlay">
+            <div
               className="mobile-search-container"
               onClick={(e) => e.stopPropagation()}
             >
+
               {/* Close button - ONLY way to close mobile search */}
               <button 
                 className="mobile-search-close"
