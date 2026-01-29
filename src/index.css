@@ -507,6 +507,15 @@
     pointer-events: auto;
   }
 
+  /* Disable all clicks on overlay during initial opening period */
+  .mobile-search-overlay.just-opened {
+    pointer-events: none !important;
+  }
+
+  .mobile-search-overlay.just-opened .mobile-search-container {
+    pointer-events: auto !important;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;

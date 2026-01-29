@@ -147,10 +147,10 @@ const Navbar = () => {
       setMenuOpen(false);
       setSearchJustOpened(true);
       
-      // Extended timeout for Android + keyboard animation
+      // Much longer timeout - 1.5 seconds for Android keyboard animation
       setTimeout(() => {
         setSearchJustOpened(false);
-      }, 800);
+      }, 1500);
     }
   };
 
@@ -164,19 +164,11 @@ const Navbar = () => {
     setSearchJustOpened(false);
   };
 
-  // Handle overlay backdrop click - only close when clicking the backdrop itself
+  // Handle overlay backdrop click - DISABLED to prevent Android issues
   const handleOverlayClick = (e) => {
-    // Prevent closing if search just opened (fixes Android issue)
-    if (searchJustOpened) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
-    
-    // Only close if clicking the overlay backdrop itself, not the search container
-    if (e.target === e.currentTarget && e.target.classList.contains('mobile-search-overlay')) {
-      closeMobileSearch();
-    }
+    // Don't allow closing via overlay click at all - only X button works
+    // This prevents any accidental closes on Android
+    e.stopPropagation();
   };
 
   return (
@@ -234,7 +226,10 @@ const Navbar = () => {
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div className="mobile-search-overlay" onClick={handleOverlayClick}>
+          <div 
+            className={`mobile-search-overlay ${searchJustOpened ? 'just-opened' : ''}`}
+            onClick={handleOverlayClick}
+          >
             <div 
               className="mobile-search-container"
               onClick={(e) => e.stopPropagation()}
