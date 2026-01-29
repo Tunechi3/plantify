@@ -494,6 +494,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    isolation: isolate;
     background: rgba(0, 0, 0, 0.7);
     z-index: 2000;
     backdrop-filter: blur(3px);
@@ -582,6 +583,11 @@
     border-radius: 12px;
     max-height: 300px;
   }
+
+  body:has(.mobile-search-overlay) .swiper {
+  pointer-events: none;
+  touch-action: none;
+}
 
   /* Adjust hamburger menu width */
   .navbar-menu {
