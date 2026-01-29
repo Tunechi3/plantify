@@ -95,7 +95,10 @@ const Navbar = () => {
   // Focus search input when mobile search opens
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
+      // Delay focus slightly to ensure DOM is ready
+      setTimeout(() => {
+        searchInputRef.current.focus();
+      }, 100);
     }
   }, [searchOpen]);
 
@@ -123,10 +126,10 @@ const Navbar = () => {
       setMenuOpen(false);
       setSearchJustOpened(true);
       
-      // Reset flag after animation completes (350ms matches CSS animation)
+      // Increased timeout for Android compatibility
       setTimeout(() => {
         setSearchJustOpened(false);
-      }, 350);
+      }, 500);
     }
   };
 
@@ -143,7 +146,10 @@ const Navbar = () => {
   // Handle overlay backdrop click - only close when clicking the backdrop itself
   const handleOverlayClick = (e) => {
     // Prevent closing if search just opened (fixes Android issue)
-    if (searchJustOpened) return;
+    if (searchJustOpened) {
+      e.stopPropagation();
+      return;
+    }
     
     // Only close if clicking the overlay backdrop itself, not the search container
     if (e.target.classList.contains('mobile-search-overlay')) {
