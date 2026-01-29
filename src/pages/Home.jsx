@@ -56,10 +56,10 @@ const Home = () => {
             <h4>Style That Speaks Before You Do</h4>
             <p>Discover amazing products at unbeatable prices. Shop the latest trends 
             with fast delivery and exceptional customer service.</p>
-            <div className='hero-buttons'>
+            {/* <div className='hero-buttons'>
               <button className='btn btn-primary'>Shop Now</button>
               <button className='btn btn-secondary'>Learn More</button>
-            </div>
+            </div> */}
           </div>
 
           <div className='hero-image'>

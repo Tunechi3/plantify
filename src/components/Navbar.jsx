@@ -18,7 +18,7 @@ const Navbar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  // const [searchJustOpened, setSearchJustOpened] = useState(false);
+  const [searchJustOpened, setSearchJustOpened] = useState(false);
   const wrapperRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -103,18 +103,13 @@ const Navbar = () => {
       });
       
       // Delay focus to allow overlay animation and prevent immediate blur
-      // setTimeout(() => {
-      //   if (searchInputRef.current) {
-      //     searchInputRef.current.focus();
-          
-      //     searchInputRef.current.click();
-      //   }
-      // }, 400);
-
       setTimeout(() => {
-        searchInputRef.current?.focus({ preventScroll: true });
-      }, 300);
-    // Force click to ensure keyboard appears on Android
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+          // Force click to ensure keyboard appears on Android
+          searchInputRef.current.click();
+        }
+      }, 400);
     } else {
       // Re-enable Swiper when search closes
       const swiperContainers = document.querySelectorAll('.swiper, .swiper-container');
@@ -150,12 +145,12 @@ const Navbar = () => {
     if (!searchOpen) {
       setSearchOpen(true);
       setMenuOpen(false);
-      // setSearchJustOpened(true);
+      setSearchJustOpened(true);
       
-      // Much longer timeout - 1.5 seconds for Android keyboard animation
-      // setTimeout(() => {
-        // setSearchJustOpened(false);
-      // }, 1500);
+      // Extended timeout for Android + keyboard animation
+      setTimeout(() => {
+        setSearchJustOpened(false);
+      }, 800);
     }
   };
 
@@ -169,11 +164,19 @@ const Navbar = () => {
     setSearchJustOpened(false);
   };
 
-  // Handle overlay backdrop click - DISABLED to prevent Android issues
+  // Handle overlay backdrop click - only close when clicking the backdrop itself
   const handleOverlayClick = (e) => {
-    // Don't allow closing via overlay click at all - only X button works
-    // This prevents any accidental closes on Android
-    e.stopPropagation();
+    // Prevent closing if search just opened (fixes Android issue)
+    if (searchJustOpened) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    
+    // Only close if clicking the overlay backdrop itself, not the search container
+    if (e.target === e.currentTarget && e.target.classList.contains('mobile-search-overlay')) {
+      closeMobileSearch();
+    }
   };
 
   return (
@@ -231,12 +234,11 @@ const Navbar = () => {
 
         {/* Mobile Search Overlay - Shows only on ≤576px when active */}
         {searchOpen && (
-          <div className="mobile-search-overlay">
-            <div
+          <div className="mobile-search-overlay" onClick={handleOverlayClick}>
+            <div 
               className="mobile-search-container"
               onClick={(e) => e.stopPropagation()}
             >
-
               {/* Close button - ONLY way to close mobile search */}
               <button 
                 className="mobile-search-close"

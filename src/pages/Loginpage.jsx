@@ -10,6 +10,7 @@ import { UserContext } from "../components/UserContext";
 import { useDispatch, useSelector } from "react-redux";
 import { syncGuestCart, fetchUserCart } from "../app/cartSlice";
 import API_URL from "../config";
+import Navbar from "../components/Navbar";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -33,6 +34,8 @@ const Loginpage = () => {
   const guestCart = useSelector((state) => state.cart.items);
 
   return (
+    <>
+    <Navbar/>
     <div className={`auth-container ${isLogin ? "login-mode" : ""}`}>
       {/* LEFT PANEL - LOGIN */}
       <div className="panel left-panel">
@@ -222,6 +225,7 @@ const Loginpage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

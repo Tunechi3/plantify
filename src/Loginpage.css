@@ -8,7 +8,7 @@
   overflow: hidden;
   border-radius: 20px;
   transition: 0.8s ease-in-out;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); /* soft shadow */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 /* ===== LEFT PANEL ===== */
@@ -26,7 +26,8 @@
   opacity: 1;
 }
 
-.left-panel h2, .left-panel p {
+.left-panel h2,
+.left-panel p {
   margin-bottom: 12px;
   font-family: "Poppins", sans-serif;
 }
@@ -83,6 +84,7 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* ===== FORM ===== */
 .form-box {
   width: 80%;
   display: flex;
@@ -104,6 +106,7 @@
   transition: all 0.5s ease-in-out;
 }
 
+/* ===== BUTTONS ===== */
 .submit-btn {
   padding: 12px;
   background: linear-gradient(135deg, #3f866f, #29ab93);
@@ -151,24 +154,20 @@
 }
 
 .auth-container.login-mode .left-panel {
-  transform: translateX(0);
   background: #ffffff;
   color: #065f46;
-  opacity: 1;
 }
 
 .auth-container.login-mode .right-panel {
-  transform: translateX(0);
   background: linear-gradient(135deg, #3f866f, #29ab93);
   color: white;
-  opacity: 1;
 }
 
 .auth-container.login-mode .right-panel h2 {
   color: white;
 }
 
-/* ===== MODERN INPUT WITH ICONS ===== */
+/* ===== INPUT WITH ICON ===== */
 .input-group {
   position: relative;
   width: 100%;
@@ -183,67 +182,7 @@
   color: #3f866f;
 }
 
-.input-group input {
-  padding-left: 35px;
-  padding-right: 12px;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #cfcfcf;
-  outline: none;
-  background: #fafafa;
-  transition: all 0.3s ease-in-out;
-}
-
-.input-group input:focus {
-  border-color: #29ab93;
-  box-shadow: 0 0 5px rgba(41,171,147,0.4);
-}
-
-/* ===== FORGOT PASSWORD ===== */
-.forgot-pass {
-  font-size: 12px;
-  color: #065f46;
-  margin: 5px 0 15px 0;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.forgot-pass:hover {
-  color: #29ab93;
-}
-
-/* ===== SOCIAL SIGN-IN BUTTONS ===== */
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.social-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ===== Formik/Yup error styling & strength bar (append only) ===== */
-.error-msg {
-  color: #e02424;
-  font-size: 12px;
-  /* margin-top: 6px; */
-  text-align: center;
-  font-family: "Poppins", sans-serif;
-}
-
-/* slight adjustment for fields coming from Formik */
+.input-group input,
 .styled-field {
   padding-left: 35px;
   padding-right: 12px;
@@ -252,33 +191,18 @@
   border: 1px solid #cfcfcf;
   outline: none;
   background: #fafafa;
+  width: 100%;
+  max-width: 250px;
+  text-align: left;
   transition: all 0.3s ease-in-out;
-  width: 100%;
-  max-width: 250px;
-  text-align: center;
 }
 
-/* Strength bar under password (Option A) */
-.strength-bar {
-  width: 100%;
-  max-width: 250px;
-  height: 2px;
-  background: #f0f0f0;
-  border-radius: 6px;
-  /* margin-top: px; */
-  overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+.input-group input:focus {
+  border-color: #29ab93;
+  box-shadow: 0 0 5px rgba(41, 171, 147, 0.4);
 }
 
-.strength-fill {
-  height: 100%;
-  width: 0%;
-  background: #e53935;
-  transition: width 0.35s ease, background 0.35s ease;
-  border-radius: 6px 0 0 6px;
-}
-
-/* Ensure forgot-pass (button) looks like text and doesn't submit */
+/* ===== FORGOT PASSWORD ===== */
 .forgot-pass {
   background: transparent;
   border: none;
@@ -293,33 +217,125 @@
   color: #29ab93;
 }
 
-/* Small responsive tweak: keep everything centered on narrow screens */
-@media (max-width: 720px) {
-  .auth-container {
-    width: 95%;
-    height: auto;
-    padding: 20px;
-  }
-  .left-panel, .right-panel {
-    width: 100%;
-    padding: 30px 20px;
-  }
-  .form-box {
-    width: 100%;
-  }
+/* ===== ERROR ===== */
+.error-msg {
+  color: #e02424;
+  font-size: 12px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
 }
 
+/* ===== STRENGTH BAR ===== */
+.strength-bar {
+  width: 100%;
+  max-width: 250px;
+  height: 2px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
 
-.social-btn.gmail { background: #db4437; }    /* Gmail Red */
-.social-btn.yahoo { background: #410093; }    /* Yahoo Purple */
-.social-btn.hotmail { background: #0072c6; }  /* Hotmail Blue */
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  background: #e53935;
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+/* ===== SOCIAL ===== */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-btn.gmail { background: #db4437; }
+.social-btn.yahoo { background: #410093; }
+.social-btn.hotmail { background: #0072c6; }
 
 .social-btn:hover {
   transform: scale(1.1);
 }
 
+/* ===== RESPONSIVE ===== */
 
-/* fade in animation */
+/* Laptop */
+@media (max-width: 1024px) {
+  .auth-container {
+    width: 95%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    height: auto;
+    padding: 40px 25px;
+  }
+
+  .right-panel h2 {
+    margin-top: 0;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-container {
+    margin: 20px auto;
+  }
+
+  .left-panel h2,
+  .right-panel h2 {
+    font-size: 24px;
+  }
+
+  .form-box {
+    width: 100%;
+  }
+
+  .styled-field,
+  .input-group,
+  .strength-bar {
+    max-width: 100%;
+  }
+
+  .submit-btn,
+  .panel-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+  .left-panel h2,
+  .right-panel h2 {
+    font-size: 22px;
+  }
+}
+
+/* ===== ANIMATION ===== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
