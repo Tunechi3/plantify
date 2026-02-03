@@ -182,6 +182,66 @@
   max-width: 400px;
 }
 
+.ecp-avatar-upload-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ecp-file-input {
+  display: none;
+}
+
+.ecp-upload-btn {
+  padding: 10px 20px;
+  background: #02554a;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
+}
+
+.ecp-upload-btn:hover {
+  background: #024a41;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 85, 74, 0.3);
+}
+
+.ecp-upload-btn:active {
+  transform: translateY(0);
+}
+
+.ecp-remove-btn {
+  padding: 10px 20px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.ecp-remove-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.ecp-upload-hint {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #6c757d;
+  width: 100%;
+}
+
 .ecp-form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

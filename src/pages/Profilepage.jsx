@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Profilepage.css';
 import API_URL from '../config';
+import Navbar from '../components/Navbar';
 
 
 const Profilepage = () => {
@@ -8,6 +9,8 @@ const Profilepage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
   
   const [profileData, setProfileData] = useState({
     fullname: '',
@@ -110,6 +113,56 @@ const Profilepage = () => {
     }
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      showMessage('error', 'Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      showMessage('error', 'Image size should be less than 5MB');
+      return;
+    }
+
+    setImageFile(file);
+    setUploadingImage(true);
+
+    try {
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('avatar', file);
+
+      const response = await fetch(`${API_URL}/api/users/upload-avatar`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.status) {
+        setProfileData(prev => ({
+          ...prev,
+          avatar: result.data.avatar,
+        }));
+        showMessage('success', 'Profile picture updated successfully');
+      } else {
+        showMessage('error', result.message);
+      }
+    } catch (error) {
+      showMessage('error', 'Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+      setImageFile(null);
+    }
+  };
+
   const handleSaveProfile = async () => {
     setSaving(true);
     try {
@@ -190,6 +243,8 @@ const Profilepage = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="ecp-container">
       <div className="ecp-wrapper">
         <div className="ecp-header">
@@ -247,13 +302,29 @@ const Profilepage = () => {
                 </div>
                 <div className="ecp-avatar-info">
                   <p className="ecp-avatar-label">Profile Picture</p>
-                  <input
-                    type="text"
-                    placeholder="Enter image URL"
-                    value={profileData.avatar}
-                    onChange={(e) => handleInputChange(null, 'avatar', e.target.value)}
-                    className="ecp-input ecp-avatar-input"
-                  />
+                  <div className="ecp-avatar-upload-container">
+                    <input
+                      type="file"
+                      id="avatar-upload"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="ecp-file-input"
+                      disabled={uploadingImage}
+                    />
+                    <label htmlFor="avatar-upload" className="ecp-upload-btn">
+                      {uploadingImage ? 'Uploading...' : 'Choose Image'}
+                    </label>
+                    {profileData.avatar && (
+                      <button
+                        onClick={() => handleInputChange(null, 'avatar', '')}
+                        className="ecp-remove-btn"
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                  <p className="ecp-upload-hint">JPG, PNG or GIF (Max 5MB)</p>
                 </div>
               </div>
 
@@ -543,6 +614,7 @@ const Profilepage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

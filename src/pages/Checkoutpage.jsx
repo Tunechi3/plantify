@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Checkout.css';
 import API_URL from '../config';
-
+import Navbar from '../components/Navbar';
 const Checkoutpage = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -212,6 +212,8 @@ const Checkoutpage = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="eco-checkout-container">
       <div className="eco-checkout-wrapper">
         {/* Progress Steps */}
@@ -618,6 +620,7 @@ const Checkoutpage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

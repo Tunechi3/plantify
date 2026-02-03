@@ -189,10 +189,10 @@ const Cart = () => {
             <span>Subtotal ({items.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <div className="summary-row">
+          {/* <div className="summary-row">
             <span>Shipping</span>
             <span>FREE</span>
-          </div>
+          </div> */}
           <hr />
           <div className="summary-row">
             <span><strong>Total</strong></span>
