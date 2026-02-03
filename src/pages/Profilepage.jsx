@@ -293,7 +293,14 @@ const Profilepage = () => {
               <div className="ecp-avatar-section">
                 <div className="ecp-avatar">
                   {profileData.avatar ? (
-                    <img src={profileData.avatar} alt="Profile" className="ecp-avatar-img" />
+                    <img 
+                      src={profileData.avatar.startsWith('http') 
+                        ? profileData.avatar 
+                        : `${API_URL}${profileData.avatar}`
+                      } 
+                      alt="Profile" 
+                      className="ecp-avatar-img" 
+                    />
                   ) : (
                     <div className="ecp-avatar-placeholder">
                       {profileData.fullname.charAt(0).toUpperCase()}

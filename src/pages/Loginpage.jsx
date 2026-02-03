@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Loginpage.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -28,6 +28,9 @@ const signupSchema = Yup.object().shape({
 
 const Loginpage = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
   const dispatch = useDispatch();
@@ -99,10 +102,17 @@ const Loginpage = () => {
                   <FaLock className="input-icon" />
                   <Field
                     name="password"
-                    type="password"
+                    type={showLoginPassword ? "text" : "password"}
                     placeholder="Password"
                     className="styled-field"
                   />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setShowLoginPassword((prev) => !prev)}
+                  >
+                    {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
                 <ErrorMessage
                   name="password"
@@ -186,10 +196,17 @@ const Loginpage = () => {
                   <FaLock className="input-icon" />
                   <Field
                     name="password"
-                    type="password"
+                    type={showSignupPassword ? "text" : "password"}
                     placeholder="Password"
                     className="styled-field"
                   />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setShowSignupPassword((prev) => !prev)}
+                  >
+                    {showSignupPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
                 <ErrorMessage name="password" component="div" className="error-msg" />
 
@@ -197,10 +214,17 @@ const Loginpage = () => {
                   <FaLock className="input-icon" />
                   <Field
                     name="confirm"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm Password"
                     className="styled-field"
                   />
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
                 <ErrorMessage name="confirm" component="div" className="error-msg" />
 

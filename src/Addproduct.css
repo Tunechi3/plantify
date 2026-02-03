@@ -209,7 +209,7 @@ textarea.input-field {
 
 .cart-details {
   flex: 1;
-  
+  min-width: 0;
 }
 
 .cart-details h4 {
@@ -217,6 +217,7 @@ textarea.input-field {
   margin-bottom: 8px;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
+  word-break: break-word;
 }
 
 .price {
@@ -251,13 +252,19 @@ textarea.input-field {
   text-align: right;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .subtotal {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .remove-btn {
@@ -341,6 +348,7 @@ textarea.input-field {
 
 .empty-cart-content {
   max-width: 420px;
+  width: 100%;
   text-align: center;
   font-family: "Poppins", sans-serif;
   background: #ffffff;
@@ -396,21 +404,6 @@ textarea.input-field {
   position: relative;
 }
 
-/* .cart-badge {
-  position: absolute;
-  top: -6px;
-  left: 8px;
-  background: #394a47;
-  color: white;
-  font-size: 12px;
-  padding: 2px 7px;
-  border-radius: 50%;
-  font-weight: 600;
-} */
-/* .cart-icon {
-  font-size: 17px; 
-} */
-
 .cart-icon-wrapper {
   position: relative;
   display: inline-block;
@@ -430,4 +423,147 @@ textarea.input-field {
   font-weight: bold;
   padding: 3px 6px;
   border-radius: 50%;
+}
+
+
+/* ===== CART RESPONSIVE — TABLET ===== */
+@media (max-width: 768px) {
+  .cart-page {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+
+  .cart-title {
+    font-size: 24px;
+  }
+
+  .cart-item {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .cart-item img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .cart-right {
+    padding: 24px;
+  }
+
+  .empty-cart-content {
+    padding: 40px 28px;
+  }
+
+  .grid-two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 1.5rem;
+  }
+}
+
+/* ===== CART RESPONSIVE — MOBILE ===== */
+@media (max-width: 480px) {
+  .cart-page {
+    padding: 16px 12px;
+    gap: 18px;
+  }
+
+  .cart-title {
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+  }
+
+  .cart-details {
+    width: 100%;
+  }
+
+  .cart-details h4 {
+    font-size: 16px;
+  }
+
+  .cart-actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .subtotal {
+    font-size: 15px;
+  }
+
+  .cart-right {
+    padding: 18px;
+  }
+
+  .cart-right h3 {
+    font-size: 18px;
+  }
+
+  .summary-total {
+    font-size: 16px;
+  }
+
+  .checkout-btn {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .empty-cart-content {
+    padding: 32px 20px;
+  }
+
+  .empty-cart-icon {
+    font-size: 50px;
+  }
+
+  .empty-cart-content h2 {
+    font-size: 22px;
+  }
+
+  .empty-cart-content p {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .empty-cart-btn {
+    width: 100%;
+    text-align: center;
+    padding: 14px 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form-card {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
 }

@@ -259,6 +259,7 @@
 
 .eco-shipping-details {
   flex: 1;
+  min-width: 0;
 }
 
 .eco-shipping-name {
@@ -277,6 +278,7 @@
   font-size: 18px;
   font-weight: 700;
   color: #02554a;
+  white-space: nowrap;
 }
 
 /* Payment Methods */
@@ -410,51 +412,68 @@
 }
 
 /* Success Content */
+.eco-checkout-content.eco-success-layout {
+  grid-template-columns: 1fr;
+}
+
+.eco-checkout-content.eco-success-layout .eco-main-section {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .eco-success-content {
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 40px;
 }
 
 .eco-success-icon {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 30px;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 36px;
   background: #02554a;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 50px;
+  font-size: 56px;
   font-weight: 700;
+  box-shadow: 0 8px 24px rgba(2, 85, 74, 0.25);
 }
 
 .eco-success-title {
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 600;
   color: #02554a;
   margin: 0 0 20px 0;
 }
 
 .eco-success-text {
-  font-size: 16px;
+  font-size: 17px;
   color: #6c757d;
-  line-height: 1.6;
+  line-height: 1.7;
   margin: 0 0 15px 0;
-  max-width: 600px;
+  max-width: 580px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .eco-success-actions {
   display: flex;
-  gap: 15px;
+  gap: 18px;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 .eco-success-actions a {
   text-decoration: none;
+}
+
+.eco-success-actions .eco-btn {
+  padding: 15px 38px;
+  font-size: 16px;
+  min-width: 200px;
 }
 
 /* Order Summary Sidebar */
@@ -505,6 +524,7 @@
 
 .eco-item-details {
   flex: 1;
+  min-width: 0;
 }
 
 .eco-item-name {
@@ -513,6 +533,7 @@
   color: #2d3748;
   margin-bottom: 4px;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .eco-item-quantity {
@@ -524,6 +545,7 @@
   font-size: 15px;
   font-weight: 700;
   color: #02554a;
+  white-space: nowrap;
 }
 
 .eco-summary-divider {
@@ -548,7 +570,7 @@
   margin-top: 8px;
 }
 
-/* Responsive Design */
+/* ===== RESPONSIVE — TABLET (≤968px) ===== */
 @media (max-width: 968px) {
   .eco-checkout-content {
     grid-template-columns: 1fr;
@@ -556,11 +578,6 @@
 
   .eco-sidebar {
     position: static;
-    order: -1;
-  }
-
-  .eco-payment-methods {
-    grid-template-columns: 1fr;
   }
 
   .eco-progress-steps {
@@ -568,6 +585,7 @@
   }
 }
 
+/* ===== RESPONSIVE — TABLET (≤768px) ===== */
 @media (max-width: 768px) {
   .eco-checkout-container {
     padding: 20px 10px;
@@ -594,8 +612,30 @@
     flex-direction: column;
   }
 
+  .eco-step-actions .eco-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .eco-success-content {
+    padding: 44px 24px;
+  }
+
   .eco-success-actions {
     flex-direction: column;
+    align-items: center;
+    margin-top: 36px;
+  }
+
+  .eco-success-actions a {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  .eco-success-actions .eco-btn {
+    width: 100%;
+    min-width: unset;
   }
 
   .eco-section-title {
@@ -613,9 +653,24 @@
   }
 }
 
+/* ===== RESPONSIVE — MOBILE (≤480px) ===== */
 @media (max-width: 480px) {
   .eco-progress-container {
-    padding: 15px;
+    padding: 15px 10px;
+  }
+
+  .eco-progress-line {
+    margin: 0 6px;
+  }
+
+  .eco-step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .eco-step-label {
+    font-size: 11px;
   }
 
   .eco-main-section {
@@ -624,15 +679,130 @@
 
   .eco-section-title {
     font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .eco-subsection-title {
+    font-size: 16px;
+    margin: 24px 0 14px 0;
+  }
+
+  /* Shipping method cards */
+  .eco-shipping-method {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .eco-shipping-name {
+    font-size: 14px;
+  }
+
+  .eco-shipping-time {
+    font-size: 12px;
+  }
+
+  .eco-shipping-price {
+    font-size: 15px;
+  }
+
+  /* Payment method cards — stack to single column */
+  .eco-payment-methods {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .eco-payment-method {
+    flex-direction: row;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .eco-payment-label {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  /* Review cards */
+  .eco-review-card {
+    padding: 14px;
+  }
+
+  .eco-review-heading {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  /* Order summary sidebar */
+  .eco-order-summary {
+    padding: 16px;
+  }
+
+  .eco-summary-title {
+    font-size: 18px;
+  }
+
+  .eco-item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .eco-item-name {
+    font-size: 13px;
+  }
+
+  .eco-summary-row {
+    font-size: 14px;
+  }
+
+  .eco-summary-total {
+    font-size: 16px;
+  }
+
+  /* Buttons */
+  .eco-btn {
+    padding: 13px 20px;
+    font-size: 15px;
+  }
+
+  /* Success page */
+  .eco-checkout-content.eco-success-layout .eco-main-section {
+    max-width: 100%;
+  }
+
+  .eco-success-content {
+    padding: 30px 10px;
   }
 
   .eco-success-icon {
     width: 80px;
     height: 80px;
     font-size: 40px;
+    box-shadow: 0 6px 16px rgba(2, 85, 74, 0.2);
   }
 
   .eco-success-title {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .eco-success-text {
+    font-size: 14px;
+  }
+
+  .eco-success-actions {
+    margin-top: 28px;
+  }
+
+  .eco-success-actions .eco-btn {
+    padding: 13px 20px;
+    min-width: unset;
+  }
+
+  /* Saved address checkbox area */
+  .eco-saved-address-option {
+    padding: 12px;
+  }
+
+  .eco-checkbox-label {
+    font-size: 14px;
   }
 }

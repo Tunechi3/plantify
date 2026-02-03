@@ -139,7 +139,6 @@ const Cart = () => {
             <Link to="/" className="empty-cart-btn">Continue Shopping</Link>
           </div>
         </div>
-        <Footer />
       </>
     );
   }
@@ -213,7 +212,6 @@ const Cart = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

@@ -242,7 +242,7 @@ const Checkoutpage = () => {
           </div>
         )}
 
-        <div className="eco-checkout-content">
+        <div className={`eco-checkout-content ${step === 4 ? 'eco-success-layout' : ''}`}>
           {/* Main Content */}
           <div className="eco-main-section">
             {/* Step 1: Shipping Information */}

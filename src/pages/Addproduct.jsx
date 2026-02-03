@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import "../Addproduct.css";
 import { toast } from "react-toastify";
 import API_URL from "../config";
-
+import Navbar from "../components/Navbar";
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -77,6 +77,8 @@ export default function AddProduct() {
   };
 
   return (
+    <>
+    <Navbar/>
     <section className="categories-section">
       <div className="container">
         <div className="section-header">
@@ -159,5 +161,6 @@ export default function AddProduct() {
         </div>
       </div>
     </section>
+    </>
   );
 }
