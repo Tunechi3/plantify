@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FaTrash } from "react-icons/fa";
@@ -11,7 +11,7 @@ import {
   optimisticRemove,
   rollbackCart,
 } from "../app/cartSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../components/UserContext";
 import { toast } from "react-toastify";
 import "../Addproduct.css";
@@ -20,7 +20,9 @@ import "../Addproduct.css";
 const Cart = () => {
   const { isLoggedIn } = useContext(UserContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const items = useSelector((state) => state.cart.items);
+  const [showClearModal, setShowClearModal] = useState(false);
   
   // Store debounce timers for each product
   const debounceTimers = useRef({});
@@ -108,22 +110,33 @@ const Cart = () => {
     }
   };
 
-  const handleClear = async () => {
-    if (!window.confirm("Are you sure you want to clear your cart?")) return;
+  const handleClearClick = () => {
+    setShowClearModal(true);
+  };
 
-    const previousCart = [...items];
-
+  const handleConfirmClear = () => {
     // Clear all pending timers
     Object.values(debounceTimers.current).forEach(timer => clearTimeout(timer));
     debounceTimers.current = {};
 
-    try {
-      await dispatch(clearCart()).unwrap();
-      toast.success("Cart cleared");
-    } catch (error) {
-      // Rollback on error
-      dispatch(rollbackCart(previousCart));
-      toast.error("Failed to clear cart");
+    // Close modal
+    setShowClearModal(false);
+
+    // Dispatch clear cart - the action handles both guest and logged-in users
+    dispatch(clearCart());
+    toast.success("Cart cleared");
+  };
+
+  const handleCancelClear = () => {
+    setShowClearModal(false);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (!isLoggedIn) {
+      toast.info("Please login to proceed to checkout");
+      navigate("/login", { state: { from: "/checkout" } });
+    } else {
+      navigate("/checkout");
     }
   };
 
@@ -204,14 +217,32 @@ const Cart = () => {
             </p>
           )}
 
-          <Link to="/checkout">
-            <button className="checkout-btn">Proceed to Checkout</button>
-          </Link>
-          <button className="clear-btn" onClick={handleClear}>
+          <button className="checkout-btn" onClick={handleProceedToCheckout}>
+            Proceed to Checkout
+          </button>
+          <button className="clear-btn" onClick={handleClearClick}>
             Clear Cart
           </button>
         </div>
       </div>
+
+      {/* Clear Cart Confirmation Modal */}
+      {showClearModal && (
+        <div className="modal-overlay" onClick={handleCancelClear}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Clear Cart?</h3>
+            <p>Are you sure you want to remove all items from your cart?</p>
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={handleCancelClear}>
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={handleConfirmClear}>
+                Clear Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

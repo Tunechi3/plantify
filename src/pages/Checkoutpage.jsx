@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { clearCart } from '../app/cartSlice';
 import '../Checkout.css';
 import API_URL from '../config';
 import Navbar from '../components/Navbar';
+
 const Checkoutpage = () => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -191,6 +195,12 @@ const Checkoutpage = () => {
 
       const result = await response.json();
       if (result.status) {
+        // Clear the cart in Redux state after successful order
+        dispatch(clearCart());
+        
+        // Clear local cart items display
+        setCartItems([]);
+        
         setStep(4); // Success step
         showMessage('success', 'Order placed successfully!');
       } else {

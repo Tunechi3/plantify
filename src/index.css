@@ -2318,3 +2318,51 @@
 .skeleton-card {
   overflow: hidden;
 }
+
+/* ===== QUANTITY CONTROLS IN CATEGORIES SECTION ===== */
+.category-qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
+.category-qty-controls .qty-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #02554a;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.category-qty-controls .qty-btn:hover:not(:disabled) {
+  background: #01332e;
+  transform: scale(1.1);
+}
+
+.category-qty-controls .qty-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.category-qty-controls .qty-display {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+  color: #02554a;
+}

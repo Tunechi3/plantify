@@ -3,7 +3,7 @@ import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Loginpage.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../components/UserContext";
@@ -32,9 +32,13 @@ const Loginpage = () => {
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useContext(UserContext);
   const dispatch = useDispatch();
   const guestCart = useSelector((state) => state.cart.items);
+
+  // Get the redirect path from location state, default to "/"
+  const from = location.state?.from || "/";
 
   return (
     <>
@@ -74,7 +78,7 @@ const Loginpage = () => {
                 }
 
                 toast.success("Login successful! You'll stay logged in for 7 days.", {
-                  onClose: () => navigate("/"),
+                  onClose: () => navigate(from),
                   autoClose: 2000,
                 });
               } catch (error) {
@@ -94,6 +98,7 @@ const Loginpage = () => {
                     type="email"
                     placeholder="Email"
                     className="styled-field"
+                    autoComplete="on"
                   />
                 </div>
                 <ErrorMessage name="email" component="div" className="error-msg" />
@@ -105,6 +110,7 @@ const Loginpage = () => {
                     type={showLoginPassword ? "text" : "password"}
                     placeholder="Password"
                     className="styled-field"
+                    autoComplete="off"
                   />
                   <button
                     type="button"

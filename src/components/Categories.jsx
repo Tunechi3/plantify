@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaStar, FaHeart, FaShoppingCart } from "react-icons/fa";
-import { addToCart } from "../app/cartSlice";
+import { addToCart, updateQuantity, optimisticUpdateQty, rollbackCart } from "../app/cartSlice";
 import { addToWishlist, removeFromWishlist } from "../app/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -19,6 +19,10 @@ const Categories = ({ categories = [], products = [] }) => {
   const categoryIdInURL = searchParams.get("category");
 
   const wishlistItems = useSelector((state) => state.wishlist.items);
+  const cartItems = useSelector((state) => state.cart.items); // Get cart items
+
+  // Store debounce timers for each product
+  const debounceTimers = useRef({});
 
   useEffect(() => {
     if (products.length > 0 || categories.length > 0) {
@@ -38,6 +42,11 @@ const Categories = ({ categories = [], products = [] }) => {
   const getProductsByCategory = (categoryId) =>
     products.filter((p) => p.category && p.category._id === categoryId);
 
+  // Check if product is in cart and get its quantity
+  const getCartItem = (productId) => {
+    return cartItems.find((item) => item._id === productId);
+  };
+
   // Amazon-style: Unified add to cart
   const handleAddToCart = async (product) => {
     setAddingToCart(prev => ({ ...prev, [product._id]: true }));
@@ -53,6 +62,62 @@ const Categories = ({ categories = [], products = [] }) => {
     } finally {
       setAddingToCart(prev => ({ ...prev, [product._id]: false }));
     }
+  };
+
+  // Debounced increase (same logic as Cart.jsx)
+  const handleIncrease = (item) => {
+    const previousCart = [...cartItems];
+    const newQuantity = item.quantity + 1;
+
+    // STEP 1: Immediate optimistic update
+    dispatch(optimisticUpdateQty({ productId: item._id, quantity: newQuantity }));
+
+    // STEP 2: Clear any existing timer for this product
+    if (debounceTimers.current[item._id]) {
+      clearTimeout(debounceTimers.current[item._id]);
+    }
+
+    // STEP 3: Set new timer to update backend after user stops clicking
+    debounceTimers.current[item._id] = setTimeout(async () => {
+      try {
+        await dispatch(updateQuantity({ 
+          productId: item._id, 
+          quantity: newQuantity 
+        })).unwrap();
+      } catch (error) {
+        dispatch(rollbackCart(previousCart));
+        toast.error("Failed to update quantity");
+      }
+    }, 500);
+  };
+
+  // Debounced decrease (same logic as Cart.jsx)
+  const handleDecrease = (item) => {
+    if (item.quantity <= 1) return;
+
+    const previousCart = [...cartItems];
+    const newQuantity = item.quantity - 1;
+
+    // STEP 1: Immediate optimistic update
+    dispatch(optimisticUpdateQty({ productId: item._id, quantity: newQuantity }));
+
+    // STEP 2: Clear existing timer
+    if (debounceTimers.current[item._id]) {
+      clearTimeout(debounceTimers.current[item._id]);
+    }
+
+    // STEP 3: Set new timer for backend update
+    debounceTimers.current[item._id] = setTimeout(async () => {
+      try {
+        await dispatch(updateQuantity({ 
+          productId: item._id, 
+          quantity: newQuantity 
+        })).unwrap();
+      } catch (error) {
+        dispatch(rollbackCart(previousCart));
+        toast.error("Failed to update quantity");
+      }
+    }, 500);
   };
 
   const handleWishlist = (product) => {
@@ -148,6 +213,7 @@ const Categories = ({ categories = [], products = [] }) => {
                     (item) => item._id === product._id
                   );
                   const isAdding = addingToCart[product._id];
+                  const cartItem = getCartItem(product._id); // Check if in cart
 
                   return (
                     <div key={product._id} className="product-card">
@@ -178,14 +244,34 @@ const Categories = ({ categories = [], products = [] }) => {
 
                         <div className="product-price">${product.price}</div>
 
-                        <button
-                          className="add-to-cart-btn"
-                          onClick={() => handleAddToCart(product)}
-                          disabled={isAdding}
-                        >
-                          <FaShoppingCart className="cart-icon" />
-                          {isAdding ? "Adding..." : "Add to Cart"}
-                        </button>
+                        {/* CONDITIONAL RENDERING: Show quantity controls if in cart, otherwise show Add to Cart button */}
+                        {cartItem ? (
+                          <div className="category-qty-controls">
+                            <button 
+                              onClick={() => handleDecrease(cartItem)}
+                              disabled={cartItem.quantity <= 1}
+                              className="qty-btn"
+                            >
+                              −
+                            </button>
+                            <span className="qty-display">{cartItem.quantity}</span>
+                            <button 
+                              onClick={() => handleIncrease(cartItem)}
+                              className="qty-btn"
+                            >
+                              +
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            className="add-to-cart-btn"
+                            onClick={() => handleAddToCart(product)}
+                            disabled={isAdding}
+                          >
+                            <FaShoppingCart className="cart-icon" />
+                            {isAdding ? "Adding..." : "Add to Cart"}
+                          </button>
+                        )}
                       </div>
                     </div>
                   );

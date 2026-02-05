@@ -425,6 +425,111 @@ textarea.input-field {
   border-radius: 50%;
 }
 
+/* ===== MODAL STYLES ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-content p {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-actions .btn-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-actions .btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-actions .btn-primary {
+  background-color: #02554a;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(2, 85, 74, 0.3);
+}
+
+.modal-actions .btn-primary:hover {
+  background-color: #01332e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(2, 85, 74, 0.4);
+}
+
 
 /* ===== CART RESPONSIVE — TABLET ===== */
 @media (max-width: 768px) {
@@ -462,6 +567,14 @@ textarea.input-field {
 
   .form-card {
     padding: 1.5rem;
+  }
+
+  .modal-content {
+    padding: 32px 24px;
+  }
+
+  .modal-content h3 {
+    font-size: 22px;
   }
 }
 
@@ -565,5 +678,28 @@ textarea.input-field {
 
   .section-title {
     font-size: 1.5rem;
+  }
+
+  .modal-content {
+    padding: 28px 20px;
+    width: 95%;
+  }
+
+  .modal-content h3 {
+    font-size: 20px;
+  }
+
+  .modal-content p {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
   }
 }
